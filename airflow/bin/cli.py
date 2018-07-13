@@ -369,7 +369,7 @@ def run(args, dag=None):
     log.info("Running %s on host %s", ti, hostname)
 
     with redirect_stdout(ti.log, logging.INFO), redirect_stderr(ti.log, logging.WARN):
-        log.info("redirected stdout")
+        print("redirected stdout")
         if args.local:
             log.info("args.local is true")
             run_job = jobs.LocalTaskJob(
@@ -383,14 +383,14 @@ def run(args, dag=None):
                 pool=args.pool)
             run_job.run()
         elif args.raw:
-            log.info("args.raw is true")
+            print("args.raw is true")
             ti._run_raw_task(
                 mark_success=args.mark_success,
                 job_id=args.job_id,
                 pool=args.pool,
             )
         else:
-            log.info("neither local nor raw so pickling")
+            print("neither local nor raw so pickling")
             pickle_id = None
             if args.ship_dag:
                 try:
@@ -424,7 +424,7 @@ def run(args, dag=None):
             executor.heartbeat()
             executor.end()
             
-    log.info("logging shutdown")
+    print("logging shutdown")
     logging.shutdown()
 
 
